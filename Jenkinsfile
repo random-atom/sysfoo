@@ -1,9 +1,5 @@
 pipeline {
   agent any
-  tools {
-	maven 'Maven 3.6.3'
-  }
-
   stages {
     stage('build') {
       steps {
@@ -20,8 +16,12 @@ pipeline {
     stage('package') {
       steps {
         sh 'mvn package -DskipTests'
+        archiveArtifacts 'target/*.war'
       }
     }
 
+  }
+  tools {
+    maven 'Maven 3.6.3'
   }
 }
