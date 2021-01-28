@@ -32,6 +32,10 @@ pipeline {
         }
 
       }
+      when {
+        beforeAgent true
+        branch 'master'
+      }
       steps {
         sh 'mvn package -DskipTests'
         archiveArtifacts 'target/*.war'
@@ -40,6 +44,10 @@ pipeline {
 
     stage('Docker build and publish') {
       agent any
+      when {
+        beforeAgent true
+        branch 'master'
+      }
       steps {
         script {
           docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
